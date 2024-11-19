@@ -20,7 +20,7 @@
     
     
       
-        <title>Information of the Software and how it works. - Data Request Documentation</title>
+        <title>Data request software - Data Request Documentation</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#information-of-the-software-and-how-it-works" class="md-skip">
+        <a href="#data-request-software" class="md-skip">
           Skip to content
         </a>
       
@@ -109,7 +109,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Information of the Software and how it works.
+              Data request software
             
           </span>
         </div>
@@ -288,7 +288,7 @@
         
   
   <span class="md-ellipsis">
-    DReq Content
+    DReq Content: technical details
   </span>
   
 
@@ -358,15 +358,63 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Data request software
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
-    Information of the Software and how it works.
+    Data request software
   </span>
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      Getting started
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -485,6 +533,32 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      Getting started
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -498,8 +572,69 @@
                   
 
 
-<h1 id="information-of-the-software-and-how-it-works">Information of the Software and how it works.</h1>
-<p>Some information here.</p>
+<h1 id="data-request-software">Data request software</h1>
+<p>The <a href="https://github.com/CMIP-Data-Request/CMIP7_DReq_Software">data request software</a> provides python code allowing users to interact programatically with the <a href="https://wcrp-cmip.org/cmip7/cmip7-data-request/">CMIP7 data request</a>.
+It will provide an API and scripts that can produce lists of the variables requested for each CMIP7 experiment, information about the requested variables, and in general support different ways of querying and utilizing the information in the data request.</p>
+<h2 id="overview">Overview</h2>
+<p>The CMIP7 data request <strong>Software</strong> and <strong>Content</strong> are version controlled in separate github repositories.
+Official releases of the data request correspond to a tag in each of these repositories (e.g., <code>v1.0beta</code>). 
+However the Software can interact with different versions of the Content - for example, to examine changes that have occurred when a new version of the data request is issued.</p>
+<p>The data request <strong>Content</strong>, which is version controlled <a href="https://github.com/CMIP-Data-Request/CMIP7_DReq_Content">here</a>, refers to the information comprising the data request. 
+This includes descriptions of Opportunities and their lists of requested variables, definitions of the variables, etc.
+The Content is stored as <code>json</code> and read by the data request Software as its input, but users should not interact with this <code>json</code> directly and its structure is not designed for readability.
+Users do not need to manually download the Content as this is done automatically by the Software (see "Getting Started", below, for further details).</p>
+<p>The data request Content is an automatic export from Airtable, a cloud platform used by the Data Request Task Team to facilitate ongoing community engagement in developing the data request.
+Airtable provides users with a browseable web interface to explore data request information contained in relational databases that are referred to as "bases".
+These Airtable bases contain interlinked tables that constitute the primary source of data request information.</p>
+<p>The Content of each official release of the data request can be explored online using the <a href="https://bit.ly/CMIP7-DReq-v1_0beta">Airtable interface</a>.
+This provides a browseable web view of the Content, allowing users to follow links between different elements of the data request - for example, to view the variables requested by a given Opportunity, or to view the Opportunities that request a given variable.
+This view is complementary to the access to the Content that is provided via the Software, and both access methods (Airtable and Software) are based on the same underlying information about the data request.</p>
+<p>Using the data request <strong>Software</strong> provides a way to interact programmatically with the data request Content, such as to:</p>
+<ul>
+<li>Given a list of supported opportunities and their priorities, produce lists of variables to output for each experiment (see Getting Started section to test this functionality),</li>
+<li>Output the CF-compliant metadata characterizing each variable (an example file with some of the metadata for each requested variable is available in v1.0beta),</li>
+<li>Compare the requested output of CMIP7 experiments to a given model's published CMIP6 output (not yet available with v1.0beta, to come in a commit to come soon before v1.0),</li>
+<li>Estimate output volumes (not yet available with v1.0beta, to come in a commit to come soon before v1.0).</li>
+</ul>
+<p>The Software should facilitate integration of the data request into modelling workflows.
+Suggestions for functionality are welcome in the <a href="https://github.com/CMIP-Data-Request/CMIP7_DReq_Software/discussions">github discussion forum</a>.</p>
+<p>During development, the Software and Content repositories reside in the github organisation https://github.com/CMIP-Data-Request.
+Stable releases will eventually be migrated into the https://github.com/WCRP-CMIP organisation.</p>
+<h2 id="getting-started">Getting started</h2>
+<p>To begin, clone the Software and navigate to the <code>scripts/</code> directory:
+<div class="highlight"><pre><span></span><code>git clone git@github.com:CMIP-Data-Request/CMIP7_DReq_Software.git
+cd CMIP7_DReq_Software/scripts
+</code></pre></div>
+The <code>env.yml</code> file can be used to create a conda environment in which to run the Software:
+<div class="highlight"><pre><span></span><code>conda env create -n my_dreq_env --file env.yml
+</code></pre></div>
+replacing <code>my_dreq_env</code> with your preferred environment name. 
+Activate this environment:
+<div class="highlight"><pre><span></span><code>conda activate my_dreq_env
+</code></pre></div>
+and run the the example script:
+<div class="highlight"><pre><span></span><code>python workflow_example.py
+</code></pre></div>
+This script contains a workflow to access the data request Content, specify a list of Opportunities and priority levels of variables, and output the lists of variables requested from each experiment in the specified Opportunities.
+Each listed variables is currently identified by a unique "compound name" using CMIP6-era table names and short variable names (<code>Amon.tas</code>, <code>Omon.tos</code>, etc).
+Variable names may change in upcoming releases, but in any case a mapping to CMIP6-era variable names will be retained in the data request so as to allow comparison with CMIP6 output (for those variables that were defined in CMIP6).</p>
+<p>To access the data request Content, the example script first needs to identify the version of the data request Content that is being used. 
+This is done by specifying a tag in the Content repo and calling the retrieval function.
+For example:
+<div class="highlight"><pre><span></span><code>dc.retrieve(&#39;v1.0beta&#39;)
+</code></pre></div>
+downloads <code>v1.0beta</code> of the Content into local cache, if it is not already there.
+The script can then access it by loading it into a python dict variable:
+<div class="highlight"><pre><span></span><code>content = dc.load(&#39;v1.0beta&#39;)
+</code></pre></div>
+Currently a single version of the Content <code>json</code> file is roughly 20 MB in size.
+The size of local cache can be managed by deleting unused versions.
+For example, to remove a specific version:
+<div class="highlight"><pre><span></span><code>dc.delete(&#39;v1.0beta&#39;)
+</code></pre></div>
+Or to remove all locally cached versions:
+<div class="highlight"><pre><span></span><code>dc.delete()
+</code></pre></div></p>
 
 
 
@@ -542,7 +677,7 @@
             <a
               href="../Content/"
               class="md-footer__link md-footer__link--prev"
-              aria-label="Previous: DReq Content"
+              aria-label="Previous: DReq Content: technical details"
             >
               <div class="md-footer__button md-icon">
                 
@@ -553,7 +688,7 @@
                   Previous
                 </span>
                 <div class="md-ellipsis">
-                  DReq Content
+                  DReq Content: technical details
                 </div>
               </div>
             </a>

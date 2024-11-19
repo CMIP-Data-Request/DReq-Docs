@@ -20,7 +20,7 @@
     
     
       
-        <title>DReq Content - Data Request Documentation</title>
+        <title>DReq Content: technical details - Data Request Documentation</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#dreq-content" class="md-skip">
+        <a href="#dreq-content-technical-details" class="md-skip">
           Skip to content
         </a>
       
@@ -109,7 +109,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              DReq Content
+              DReq Content: technical details
             
           </span>
         </div>
@@ -299,7 +299,7 @@
         
   
   <span class="md-ellipsis">
-    DReq Content
+    DReq Content: technical details
   </span>
   
 
@@ -363,7 +363,7 @@
         
   
   <span class="md-ellipsis">
-    Information of the Software and how it works.
+    Data request software
   </span>
   
 
@@ -498,8 +498,99 @@
                   
 
 
-<h1 id="dreq-content">DReq Content</h1>
-<p>Information about the Data Request and what it contains</p>
+<h1 id="dreq-content-technical-details">DReq Content: technical details</h1>
+<p>The information used by the data request is version controlled <a href="https://github.com/CMIP-Data-Request/CMIP7_DReq_Content">here</a>.
+This information is referred to as the data request "content".
+It includes all information linking scientific goals to the output variables requested from particular CMIP experiments, and the CF metadata required to completely characterize the output variables.
+The content is versioned separately from the <a href="https://github.com/CMIP-Data-Request/CMIP7_DReq_Software">data request software</a>, which provides an interface to query and utilize the content. 
+<strong>Users should not interact with the content files directly</strong>, as the software is intended for this purpose.</p>
+<p>Airtable databases ("bases") maintained by the CMIP IPO and Data Request Task Team are the primary source of the content.
+These Airtable bases are used to manage the information gathered by the extensive community consultation undertaken to develop the CMIP7 data request.
+The content repository stores exports of the information from Airtable in <code>json</code> files.
+Although <code>json</code> files are easily viewable in any text editor, the format of these exported content files is not designed for readability since users should interact with data request content either by using the software or by navigating the Airtable online interface.</p>
+<p>While users should not interact directly with the expored content files, for reference we document here some basic aspects of these files.
+There are two flavours of exported content file:</p>
+<ul>
+<li>
+<p><code>dreq_release_export.json</code> contains the content of an official data request release. New versions of this file correspond to tags in this repository with the names of official releases (e.g. <code>v1.0beta</code> or <code>v1.0</code>).</p>
+</li>
+<li>
+<p><code>dreq_raw_export.json</code> contains the content of the "working" bases used by the Data Request Task Team, CMIP IPO, and Thematic Author Teams to develop the data request. It is updated on an ongoing basis (i.e., there can be updates between official releases). Its format differs slightly from that of <code>dreq_release_export.json</code>, but for tagged versions its information content should be consistent with <code>dreq_release_export.json</code>.</p>
+</li>
+</ul>
+<p>The basic structure of an export file is:
+<div class="highlight"><pre><span></span><code>{
+    &#39;base name 1&#39; : {
+        &#39;table name 1&#39; : {
+            ...
+            &#39;records&#39; : { # dict to contain all records (rows) in the table, indexed by each record&#39;s unique id string
+                record id 1 : {record info}
+                record id 2 : {record info}
+                ...
+            },
+            &#39;fields&#39; : { # dict to contain schema info about the fields found in each record
+                field id 1 : {field info}
+                field id 2 : {field info}
+                ...
+            },
+        &#39;table name 2&#39; : {...}
+        ...
+        }
+    }
+    &#39;base name 2&#39; : {...}
+    ...
+}
+</code></pre></div>
+For example:
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;Data Request Opportunities (Public)&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;Comment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;base_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;appbrFryP1MhstOS3&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;base_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Data Request Opportunities (Public)&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tblQqiAzywOppDNvj&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Comment&quot;</span><span class="p">,</span><span class="w">      </span>
+<span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;fields&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;fld5PnZpNhaifVJ8z&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Comment Title&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Comment Title&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;singleLineText&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;fldKYZsaRAapA58NG&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Variable groups relevant to the comment.&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;linked_table_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tbl4x1RxPwKRZ0VXY&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Variable Groups&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;multipleRecordLinks&quot;</span>
+<span class="w">        </span><span class="p">},</span><span class="w"> </span>
+<span class="w">    </span><span class="err">...</span><span class="w"> </span>
+<span class="w">      </span><span class="nt">&quot;records&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;rec5E9oBVZsxdxHKN&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;Comment&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The reference to Omon.sltbasin (Omon.slftbasin) is wrong and must be changed to Omon.sltbasin.\n&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;Comment Title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Update description&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;Opportunities&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;reczXng420cBQ08hg&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="nt">&quot;Status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Done&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;Theme&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;Ocean &amp; Sea-Ice&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="nt">&quot;Variable Groups&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;recPohW0nDzLULHye&quot;</span>
+<span class="w">          </span><span class="p">]</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="err">...</span>
+</code></pre></div></p>
+<p>Each base is a separate top-level entry ("base" is Airtable's term for database).
+This is necessary to ensure the integrity of links between different tables in each base.
+They are self-consistent within a base, but not across different bases.
+Note however that release versions (<code>dreq_release_export.json</code>) contain only one base.
+To create release versions, tables from public views of the three "working bases" (Opportunities, Physical Parameters, and Variables) at the release time are consolidated in Airtable into a single, static self-consistent base.</p>
+<p>In any export, links from a record to one or more other records in other tables appear as lists of record id strings.
+In the above example, "Opportunities" and "Variable Groups" are both links (in this instance the lists have length = 1).
+The field description indicates which table a link points to, which in the above example for "Variable Groups" is the table with the id string given by <code>linked_table_id</code>.
+(In this instance it's obvious which table is linked to because the field name is the same as the table name, but that's not required and isn't always the case.)
+Note that the unique ids of records, such as <code>"recPohW0nDzLULHye"</code>, or of other entities in the export (tables, fields, and bases), are <strong>not equivalent to the persistent unique identifiers (uid) of data request objects</strong>. 
+These ids are internally generated when the information is exported from airtable, and provide self-consistent identifiers within the export file but are not persistent identifiers.</p>
 
 
 
@@ -565,14 +656,14 @@
             <a
               href="../Software/"
               class="md-footer__link md-footer__link--next"
-              aria-label="Next: Information of the Software and how it works."
+              aria-label="Next: Data request software"
             >
               <div class="md-footer__title">
                 <span class="md-footer__direction">
                   Next
                 </span>
                 <div class="md-ellipsis">
-                  Information of the Software and how it works.
+                  Data request software
                 </div>
               </div>
               <div class="md-footer__button md-icon">
