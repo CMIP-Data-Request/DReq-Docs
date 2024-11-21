@@ -84,3 +84,144 @@ Or to remove all locally cached versions:
 ```
 dc.delete()
 ```
+
+### Command line tool
+
+The `export_dreq_lists_json.py` script is a simple command line tool
+with options to allow the user to control the output by 
+
+1. Constraining the list of opportunities that the user wishes to 
+   respond to.
+1. Specifying the experiments to be included in the output.
+1. Specifying the filename to write the output to.
+
+The command syntax is shown using the help shown below along with a 
+couple of usage examples
+
+!!! info "help text for export script"
+
+    ```
+    $ export_dreq_lists_json.py --help
+    usage: export_dreq_lists_json.py [-h] [--opportunities_file OPPORTUNITIES_FILE] [--all_opportunities] [--experiments EXPERIMENTS [EXPERIMENTS ...]] {v1.0alpha,first_export,v1.0beta,v1.0-alpha} output_file
+
+    positional arguments:
+    {v1.0alpha,first_export,v1.0beta,v1.0-alpha}
+                            data request version
+    output_file           file to write JSON output to
+
+    options:
+    -h, --help            show this help message and exit
+    --opportunities_file OPPORTUNITIES_FILE
+                            path to JSON file listing opportunities to respond to. If it doesn't exist a template will be created
+    --all_opportunities   Respond to all opporunities
+    --experiments EXPERIMENTS [EXPERIMENTS ...]
+                            limit output to the specified experiments
+    ```
+
+
+!!! info "Generate variable list for all opportunities, but for `historical` experiment only"
+
+    ``` 
+    $ export_dreq_lists_json.py v1.0beta historical.json --all_opportunities --experiments historical
+
+    For data request version v1.0beta, number of requested variables found by experiment:
+    historical : Core=132 ,High=1011 ,Medium=401 ,Low=98, TOTAL=1642
+
+    Wrote requested variables to historical.json
+    ```
+    The historical.json file will then look similar to 
+    ```
+    {
+        "Header": {
+            "Opportunities": [
+                "Accurate assessment of land-atmosphere coupling",
+                "Advancing Wind-Wave Climate Modelling for Coastal Zone Dynamics, Impacts, and Risk Assessment through International Collaborative Research Projects as Part of the Coordinated Ocean Wave Climate Project (COWCliP)",
+                "AerChemMIP",
+                ...
+                "Water cycle/budget assessment",
+                "Wind driven Ocean Surface Waves "
+            ],
+            "dreq version": "v1.0beta"
+        },
+        "experiment": {
+            "historical": {
+                "Core": [
+                    "3hr.huss",
+                    "3hr.pr",
+                    "3hr.tas",
+                    "3hr.uas",
+                    "3hr.vas",
+                    ...
+    ```
+
+!!! info "Generate variable list for one opportunity for all experiments"
+
+    Generate opportunity json file (this must not exist when you run this command)
+    ```
+    $ export_dreq_lists_json.py v1.0beta all_experiments.json --opportunities opportunity_selection.json
+    written opportunities dict to opportunity_selection.json. Please edit and re-run
+    ```
+    The `opportunity_selection.json` file will contain a set of key
+    value pairs;
+    ```
+    {
+    "Sea ice changes, drivers and impacts": true,
+    "Synoptic systems and impacts": true,
+    "Atmospheric dynamics and variability ": true,
+    "Role of fire in the Earth system": true,
+    "Temperature variability": true,
+    ...
+    "Causality of Polar Amplification ": true,
+    "Changes in marine biogeochemical cycles and ecosystem processes": true
+    }
+    ```
+    Edit this file and change all `true` values to false other than for 
+    the `"Temperature variability"` key. Re-running the 
+    `export_dreq_lists_json.py` command gives
+    ```
+    $ export_dreq_lists_json.py v1.0beta all.json --opportunities opportunity_selection.json
+    For data request version v1.0beta, number of requested variables found by experiment:
+        1pctCO2 : Core=0 ,High=16 ,Medium=16 ,Low=0, TOTAL=32
+        1pctCO2-bgc : Core=0 ,High=16 ,Medium=16 ,Low=0, TOTAL=32
+        1pctCO2-rad : Core=0 ,High=16 ,Medium=16 ,Low=0, TOTAL=32
+        High scenario : Core=0 ,High=16 ,Medium=16 ,Low=0, TOTAL=32
+        Initialised prediction (2025-2036) : Core=0 ,High=16 ,Medium=16 ,Low=0, TOTAL=32
+        Low overshoot scenario : Core=0 ,High=16 ,Medium=16 ,Low=0, TOTAL=32
+        Low scenario : Core=0 ,High=16 ,Medium=16 ,Low=0, TOTAL=32
+        Medium scenario : Core=0 ,High=16 ,Medium=16 ,Low=0, TOTAL=32
+        Overshoot scenario : Core=0 ,High=16 ,Medium=16 ,Low=0, TOTAL=32
+        Very low scenario : Core=0 ,High=16 ,Medium=16 ,Low=0, TOTAL=32
+        abrupt-4xCO2 : Core=0 ,High=16 ,Medium=16 ,Low=0, TOTAL=32
+        amip : Core=0 ,High=16 ,Medium=16 ,Low=0, TOTAL=32
+        amip-p4k : Core=0 ,High=16 ,Medium=16 ,Low=0, TOTAL=32
+        esm-hist : Core=0 ,High=16 ,Medium=16 ,Low=0, TOTAL=32
+        esm-piControl : Core=0 ,High=16 ,Medium=16 ,Low=0, TOTAL=32
+        hist-GHG : Core=0 ,High=16 ,Medium=16 ,Low=0, TOTAL=32
+        hist-aer : Core=0 ,High=16 ,Medium=16 ,Low=0, TOTAL=32
+        hist-nat : Core=0 ,High=16 ,Medium=16 ,Low=0, TOTAL=32
+        historical : Core=0 ,High=16 ,Medium=16 ,Low=0, TOTAL=32
+        newGeoMIP : Core=0 ,High=16 ,Medium=16 ,Low=0, TOTAL=32
+        piControl : Core=0 ,High=16 ,Medium=16 ,Low=0, TOTAL=32
+
+    Wrote requested variables to all.json
+    ```
+    The top of the output file `all.json` then contains
+    ```
+    {
+        "Header": {
+            "Opportunities": [
+                "Temperature variability"
+            ],
+            "dreq version": "v1.0beta"
+        },
+        "experiment": {
+            "1pctCO2": {
+                "Core": [],
+                "High": [
+                    "day.hfls",
+                    "day.hfss",
+                    "day.huss",
+                    "day.mrsos",
+                    "day.rlds",
+                    ...
+    ```
